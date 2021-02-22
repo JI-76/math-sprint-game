@@ -21,7 +21,7 @@ const penaltyTimeEl = document.querySelector('.penalty-time');
 const playAgainBtn = document.querySelector('.play-again');
 
 // Equations
-
+let questionAmount = 0;
 let equationsArray = [];
 
 // Game Page
@@ -84,3 +84,39 @@ function createEquations() {
 //   bottomSpacer.classList.add('height-500');
 //   itemContainer.appendChild(bottomSpacer);
 // }
+
+// Get the value from selected radio buttion
+function getRadioValue() {
+  let radioValue;
+  radioInputs.forEach((radioInput) => {
+    if (radioInput.checked) {
+      radioValue = radioInput.value;
+    };
+  });
+  return radioValue;
+};
+
+// Form that decides amount of questions
+// e = event
+function selectQuestionAmount(e) {
+  // prevent page from refreshing
+  e.preventDefault();
+  questionAmount = getRadioValue();
+  console.log('question amount', questionAmount);
+};
+
+// Event Listener
+startForm.addEventListener('click', () => {
+  radioContainers.forEach((radioEl) => {
+    // Remove Selected Label Styling
+    radioEl.classList.remove('selected-label');
+    // Add it back if the radio input is checked
+    // Each Div element <div> class="radio-container" has children elements
+    // child[1] is the Label Element <label>
+    if (radioEl.children[1].checked) {
+      radioEl.classList.add('selected-label');
+    };
+  });
+});
+
+startForm.addEventListener('submit', selectQuestionAmount);
